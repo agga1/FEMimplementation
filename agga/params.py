@@ -4,9 +4,9 @@ import scipy.integrate as si
 
 # -u(0)u'(0) + beta*u(0) = gamma
 N = 10
-uR = 10
-beta = 1
-gamma = 0
+uR = 17
+beta = 0
+gamma = -6
 Omega = [0, 1] # hardcoded in code!!
 
 
@@ -15,15 +15,15 @@ def a(x):
 
 
 def b(x):
-    return 1
+    return x
 
 
 def c(x):
-    return 0 # math.cos(x)
+    return 2 # math.cos(x)
 
 
 def f(x):
-    return 20*x+20
+    return -48 + 24*x + 5*(x**3)
 
 
 def integrate(f):
@@ -151,8 +151,4 @@ def solveDifferentialEquation():
     u = lambda x: sum([uFactors[i]*e(x, i) for i in range(0, N+1)])
     return u
 
-res = solveDifferentialEquation()
-
-for x in np.arange(0, 1.1, 0.1):
-    print("atx: ", x, " = ",res(x))
 
