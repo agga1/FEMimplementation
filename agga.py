@@ -44,9 +44,24 @@ def e(x, n):
         else:
             return N*(xFunc(n+1)-x)
 
-print( e(0.05, 0))
 
-print(xFunc(1))
+def eDiff(x, n):
+    assert n >= 0, 'n cannot be less than 0'
+    assert N >= n, 'n cannot exceed N'
+
+    if n > 0:
+        if x < xFunc(n-1) or x > xFunc(n+1):
+            return 0
+        if x < xFunc(n):
+            return N
+        else:
+            return -N
+    elif n == 0:
+        if x > xFunc(n + 1):
+            return 0
+        else:
+            return -N
+      
 
 def solveLinArr(A, B):
     return(np.linalg.solve(A,B))
