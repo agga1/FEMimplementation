@@ -4,26 +4,27 @@ import scipy.integrate as si
 
 # -u(0)u'(0) + beta*u(0) = gamma
 N = 10
-uR = 17
+uR = 2
 beta = 0
-gamma = -6
-Omega = [0, 1] # hardcoded in code!!
+gamma = -1
+Omega = [0, 1]  # hardcoded in code!!
 
 
 def a(x):
     return 1
 
-
 def b(x):
-    return x
-
+    return 0
 
 def c(x):
-    return 2 # math.cos(x)
+    return 0  # math.cos(x)
 
 
 def f(x):
-    return -48 + 24*x + 5*(x**3)
+    return 30*math.sin(6*math.pi*x)
+
+
+""" ------ calculations --------- """
 
 
 def integrate(f):
@@ -125,30 +126,29 @@ def rightMatrixEl(i):
         return uR
     return l(i)
 
-print(leftMatrixEl(0, 0))
-
 
 def solveLinArr(A, B):
-    print("solving...")
     return (np.linalg.solve(A, B))
 
+
 def getLeftMatrix():
-    A = np.zeros((N+1, N+1))
-    for i in range(0, N+1):
-        for j in range(0, N+1):
+    A = np.zeros((N + 1, N + 1))
+    for i in range(0, N + 1):
+        for j in range(0, N + 1):
             A[i][j] = leftMatrixEl(i, j)
+    print(A)
     return A
 
 
 def getRightMatrix():
     A = np.array([rightMatrixEl(i) for i in range(0, N + 1)])
+    print(A)
     return A
+
 
 def solveDifferentialEquation():
     Am = getLeftMatrix()
     Bm = getRightMatrix()
     uFactors = solveLinArr(Am, Bm)
-    u = lambda x: sum([uFactors[i]*e(x, i) for i in range(0, N+1)])
+    u = lambda x: sum([uFactors[i] * e(x, i) for i in range(0, N + 1)])
     return u
-
-
