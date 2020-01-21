@@ -1,41 +1,43 @@
 import math
 import numpy as np
 import scipy.integrate as si
+from typing import Callable, List
 
 # -u(0)u'(0) + beta*u(0) = gamma
+Omega = [0, 1]  # hardcoded in code!!
+
+""" ----- parameters ---------"""
 N = 10
 uR = 2
 beta = 0
 gamma = -1
-Omega = [0, 1]  # hardcoded in code!!
 
 
-def a(x):
+def a(x: float) -> float:
     return 1
 
-def b(x):
+def b(x: float) -> float:
     return 0
 
-def c(x):
+def c(x: float) -> float:
     return 0  # math.cos(x)
 
-
-def f(x):
+def f(x: float) -> float:
     return 30*math.sin(6*math.pi*x)
 
 
 """ ------ calculations --------- """
 
 
-def integrate(f):
+def integrate(f: Callable[[float], float]):
     return si.quad(f, 0, 1)
 
 
-def eFun(n: int):
+def eFun(n: int) -> Callable[[float], float]:
     return lambda x: e(x, n)
 
 
-def eDiffFun(n: int):
+def eDiffFun(n: int) -> Callable[[float], float]:
     return lambda x: eDiff(x, n)
 
 
@@ -101,7 +103,7 @@ def B(eNrA: int, eNrB: int) -> float:
     return firstComp + secondComp + thirdComp + fourthComp
 
 
-def l(nr):
+def l(nr: int) -> float:
     """
     :param nr: ordinal number of base function ( l(1) <=> l(e1) )
     :return: l(v)
@@ -113,7 +115,7 @@ def l(nr):
     return firstComp + secondComp
 
 
-def leftMatrixEl(i, j):
+def leftMatrixEl(i, j) -> float:
     if i == N:
         if j == N:
             return 1
@@ -121,17 +123,17 @@ def leftMatrixEl(i, j):
     return B(i, j)
 
 
-def rightMatrixEl(i):
+def rightMatrixEl(i) -> float:
     if i == N:
         return uR
     return l(i)
 
 
-def solveLinArr(A, B):
-    return (np.linalg.solve(A, B))
+def solveLinArr(A, B)-> List[float]:
+    return np.linalg.solve(A, B)
 
 
-def getLeftMatrix():
+def getLeftMatrix() -> np.ndarray:
     A = np.zeros((N + 1, N + 1))
     for i in range(0, N + 1):
         for j in range(0, N + 1):
@@ -140,7 +142,7 @@ def getLeftMatrix():
     return A
 
 
-def getRightMatrix():
+def getRightMatrix() -> np.ndarray:
     A = np.array([rightMatrixEl(i) for i in range(0, N + 1)])
     print(A)
     return A
