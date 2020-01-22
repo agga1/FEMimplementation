@@ -3,6 +3,7 @@ import numpy as np
 import scipy.integrate as si
 from typing import Callable
 
+""" ----------------------- unused! ---------------------------------"""
 class DiffEquationSolver:
     def __init__(self, a: Callable[[float], float], b: Callable[[float], float], c: Callable[[float], float],
                  f: Callable[[float], float], uR: float, beta: float, gamma: float, N: int):
